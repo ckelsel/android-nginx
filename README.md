@@ -37,15 +37,30 @@ Connect android device with USB cable, or launch android emulator.
 
 Run command to configure nginx core and libraries.
 
+Connect android Device via TCP
+adb connect 1.1.1.1
+
 ```
 #!sh
 % auto/configure \
     --crossbuild=android-arm \
     --prefix=/sdcard/nginx \
-    --with-cc=$HOME/local/android-toolchain/arm-linux-androideabi/bin/gcc \
-    --without-pcre --without-http_rewrite_module --without-http_userid_module \
-    --with-cc-opt=-Wno-sign-compare
+    --with-cc=$HOME/local/android-toolchain/arm-linux-androideabi/bin/gcc
 ```
+
+vi objs/ngx_auto_header.h
+
+```
+#ifndef NGX_HAVE_POSIX_MEMALIGN
+#define NGX_HAVE_POSIX_MEMALIGN  0
+#endif
+
+
+#ifndef NGX_HAVE_MEMALIGN
+#define NGX_HAVE_MEMALIGN  0                                                    
+#endif
+```
+make
 
 License
 ====================
